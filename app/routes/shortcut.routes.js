@@ -3,7 +3,7 @@ var ObjectID = require('mongodb').ObjectID;
 
 module.exports = function (app,db) {
 	
-	app.get('/shortcuts' , (req,res)=> {
+	app.get('/api/v1/shortcuts' , (req,res)=> {
 		
 		db.collection('shortcuts').find({}).toArray(function(error, items) {
 			if (error) {
@@ -16,7 +16,7 @@ module.exports = function (app,db) {
 
 	})
 
-	app.get('/shortcuts/:id' , (req,res)=> {
+	app.get('/api/v1/shortcuts/:id' , (req,res)=> {
 		const id = req.params.id;
 		const details = {'_id' : new ObjectID(id) };
 		db.collection('shortcuts').findOne(details, (err,item)=> {
@@ -29,7 +29,7 @@ module.exports = function (app,db) {
 
 	})
 
-	app.post('/shortcuts' , (req,res) => {
+	app.post('/api/v1/shortcuts' , (req,res) => {
 		const shortcut = {
 			buttons : ["chtr" , "A"] ,
 			description : "description " ,
@@ -47,7 +47,7 @@ module.exports = function (app,db) {
 			})
 		})
 
-	app.delete('/shortcuts/:id', (req, res) => {
+	app.delete('/api/v1/shortcuts/:id', (req, res) => {
 		const id = req.params.id;
 		const details = { '_id': new ObjectID(id) };
 		db.collection('shortcuts').remove(details, (err, item) => {
