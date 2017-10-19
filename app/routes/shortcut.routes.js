@@ -29,32 +29,60 @@ module.exports = function (app,db) {
 
 	})
 
-	app.post('/api/v1/shortcuts' , (req,res) => {
+	app.post('/api/v1/account/shortcuts' , (req,res) => {
 		const shortcut = {
-			buttons : ["chtr" , "A"] ,
-			description : "description " ,
-			maker : "lorem ipsum" , 
-			rates : 2,
-			views : 12,
-			gif : "/test.gif" };
-			db.collection('shortcuts').insert(shortcut , (err,result)=> {
-				if(err) {
-					res.send({'error' : 'An error has occurred while inserting the shortcut '});
-				} else {
-					res.send(result.ops[0]);
-				}
+			buttons : req.body.buttons,
+			description : req.body.description,
+			maker : req.body.maker, 
+			rates : req.body.rates,
+			views : req.body.views,
+			gif : req.body.gif
+		};
 
-			})
+		db.collection('shortcuts').insert(shortcut , (err,result)=> {
+			if(err) {
+				res.send({'error' : 'An error has occurred while inserting the shortcut '});
+			} else {
+				res.send(result.ops[0]);
+			}
+
 		})
+	})
 
-	app.delete('/api/v1/shortcuts/:id', (req, res) => {
+	app.put('/api/v1/account/shortcuts/:id' , (req,res) => {
+		const shortcut = {
+			buttons : req.body.buttons,
+			description : req.body.description,
+			maker : req.body.maker, 
+			rates : req.body.rates,
+			views : req.body.views,
+			gif : req.body.gif
+		};
+		const id = req.params.id;
+		const _id = {'_id' : new ObjectID(id) };
+
+		db.collection('shortcuts').updateOne(  _id ,shortcut ,  (err,result)=> {
+			if(err) {
+				res.send({'error' : 'An error has occurred while updating the shortcut '});
+			} else {
+				res.send(Object.assign({} , shortcut , {_id : id }));
+			}
+
+		})
+	})
+
+	app.delete('/api/v1/account/shortcuts/:id', (req, res) => {
 		const id = req.params.id;
 		const details = { '_id': new ObjectID(id) };
 		db.collection('shortcuts').remove(details, (err, item) => {
 			if (err) {
 				res.send({'error':'An error has occurred'});
 			} else {
-				res.send(`shortcut ${id} deleted!`);
+				res.json({
+					"status": 200,
+					"message": `shortcut ${id} deleted!`
+				});
+				
 			} 
 		});
 	});

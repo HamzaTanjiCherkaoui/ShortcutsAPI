@@ -3,7 +3,7 @@ var validateUser  = require('../routes/index.js').validateUser;
 
 module.exports= function(req, res, next) {
 
-console.log("test");
+
 	var token = (req.body && req.body.access_token) || (req.query && req.query.access_token) || req.headers['x-access-token'];
 	var key = (req.body && req.body.x_key) || (req.query && req.query.x_key) || req.headers['x-key'];
 
@@ -23,7 +23,7 @@ console.log("test");
       // Authorize the user to see if s/he can access our resources
 
       var dbUser=decoded;
-      console.log(dbUser);
+      console.log("decoded : "+decoded);
       if (dbUser) {
 
 

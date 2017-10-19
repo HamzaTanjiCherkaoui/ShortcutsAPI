@@ -7,8 +7,5 @@ module.exports = function( app , db) {
 	shortcutRoutes(app,db);
 	auth(app,db);
 
-	app.get('/api/v1/account/test' , (req,res)=> {
-		return res.send("Hello world");
-	})
 	// add other routes here 
 }

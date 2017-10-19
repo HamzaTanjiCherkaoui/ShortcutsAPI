@@ -20,7 +20,7 @@ app.all('/*', function(req, res, next) {
   }
 });
 
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 // app.all('/api/v1/*', [require('./app/middlewares/authMiddleware')]);
 
