@@ -48,28 +48,35 @@ module.exports = function(app,db) {
     // Fire a query to your DB and check if the credentials are valid
     var dbUserObj = validate(username, password);
 
-    if (!dbUserObj) {
-      console.log(username+" "+ password);
-     // If authentication fails, we send a 401 back
-     res.status(401);
-     res.json({
-      "status": 401,
-      "message": "Invalid credentials"
-    });
-     return;
-   }
+    db.collection('users').findOne({username : username , password}, (err,user)=> {
+      if(err) {
+        res.send({'error' :`An error has occured while getting the user `});
+      } else {
+        if(!user) {
 
-   if (dbUserObj) {
-    res.json(genToken(dbUserObj));
-  }
-});
+          res.status(401);
+          res.json({
+            "status": 401,
+            "message": "Invalid credentials"
+          });
+          return;
+
+        }
+        else {
+
+          res.json(genToken(user));
+
+        }
+      }
+    })
+
+  });
 
 
 };
 
 function validate (username, password) {
-    //to remove
-    // spoofing the DB response for simplicity
+
     var dbUserObj = { // spoofing a userobject from the DB. 
       name: 'arvind',
       role: 'admin',
