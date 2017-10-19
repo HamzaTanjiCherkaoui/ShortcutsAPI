@@ -87,6 +87,7 @@ function validate (username, password) {
   }
   function validateUser (username) {
     // spoofing the DB response for simplicity
+    
     var dbUserObj = { // spoofing a userobject from the DB. 
       name: 'arvind',
       role: 'admin',
