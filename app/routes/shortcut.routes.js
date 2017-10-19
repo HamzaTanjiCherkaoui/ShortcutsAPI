@@ -12,7 +12,6 @@ module.exports = function (app,db) {
 				res.send(items);	
 			}
 
-			
 		});
 
 	})
@@ -47,8 +46,6 @@ module.exports = function (app,db) {
 
 			})
 		})
-
-	
 
 	app.delete('/shortcuts/:id', (req, res) => {
 		const id = req.params.id;

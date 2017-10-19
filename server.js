@@ -22,6 +22,8 @@ app.all('/*', function(req, res, next) {
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// app.all('/api/v1/*', [require('./app/middlewares/authMiddleware')]);
+
 
 
 MongoClient.connect(db.url, (err, database) => {
