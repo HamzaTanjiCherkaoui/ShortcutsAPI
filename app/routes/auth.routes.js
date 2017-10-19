@@ -1,9 +1,9 @@
 var jwt = require('jwt-simple');
 var ObjectID = require('mongodb').ObjectID;
-
+const API_BASE = '/api/v1'
 module.exports = function(app,db) {
 
-  app.post('/sign-up' ,(req,res) => {
+  app.post(`${API_BASE}/sign-up` ,(req,res) => {
 
     var username = req.body.username || '';
     var password = req.body.password || '';
@@ -32,7 +32,7 @@ module.exports = function(app,db) {
     });
 
   });
-  app.post('/login' ,(req,res)=>{
+  app.post(`${API_BASE}/login` ,(req,res)=>{
 
     var username = req.body.username || '';
     var password = req.body.password || '';
@@ -44,9 +44,6 @@ module.exports = function(app,db) {
       });
       return;
     }
-
-    // Fire a query to your DB and check if the credentials are valid
-    var dbUserObj = validate(username, password);
 
     db.collection('users').findOne({username : username , password}, (err,user)=> {
       if(err) {
@@ -72,30 +69,7 @@ module.exports = function(app,db) {
 
   });
 
-
 };
-
-function validate (username, password) {
-
-    var dbUserObj = { // spoofing a userobject from the DB. 
-      name: 'arvind',
-      role: 'admin',
-      username: 'arvind@myapp.com'
-    };
-
-    return dbUserObj;
-  }
-  function validateUser (username) {
-    // spoofing the DB response for simplicity
-    
-    var dbUserObj = { // spoofing a userobject from the DB. 
-      name: 'arvind',
-      role: 'admin',
-      username: 'arvind@myapp.com'
-    };
-
-    return dbUserObj;
-  }
 
   function genToken(user) {
   var expires = expiresIn(7); // 7 days
