@@ -5,7 +5,7 @@ module.exports = function (app,db) {
 	
 	app.get('/api/v1/shortcuts' , (req,res)=> {
 		
-		db.collection('shortcuts').find({}).toArray(function(error, items) {
+		db.collection('shortcuts').find({},{buttons : 1 }).toArray(function(error, items) {
 			if (error) {
 				res.send({'error' :`An error has occured while retreving the shortcuts `});
 			} else {
