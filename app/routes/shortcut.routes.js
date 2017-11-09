@@ -1,9 +1,10 @@
 var ObjectID = require('mongodb').ObjectID;
 
+const API_BASE = '/api/v1';
 
 module.exports = function (app,db) {
 	
-	app.get('/api/v1/shortcuts' , (req,res)=> {
+	app.get(`${API_BASE}/shortcuts` , (req,res)=> {
 		
 		db.collection('shortcuts').find({},{buttons : 1 }).toArray(function(error, items) {
 			if (error) {
@@ -11,12 +12,10 @@ module.exports = function (app,db) {
 			} else {
 				res.send(items);	
 			}
-
 		});
-
 	})
 
-	app.get('/api/v1/shortcuts/:id' , (req,res)=> {
+	app.get(`${API_BASE}/shortcuts/:id` , (req,res)=> {
 		const id = req.params.id;
 		const details = {'_id' : new ObjectID(id) };
 		db.collection('shortcuts').findOne(details, (err,item)=> {
@@ -28,8 +27,7 @@ module.exports = function (app,db) {
 		})
 
 	})
-
-	app.post('/api/v1/account/shortcuts' , (req,res) => {
+	app.post(`${API_BASE}/account/shortcuts` , (req,res) => {
 		const shortcut = {
 			buttons : req.body.buttons,
 			description : req.body.description,
@@ -49,7 +47,7 @@ module.exports = function (app,db) {
 		})
 	})
 
-	app.put('/api/v1/account/shortcuts/:id' , (req,res) => {
+	app.put(`${API_BASE}/account/shortcuts/:id` , (req,res) => {
 		const shortcut = {
 			buttons : req.body.buttons,
 			description : req.body.description,
@@ -71,7 +69,7 @@ module.exports = function (app,db) {
 		})
 	})
 
-	app.delete('/api/v1/account/shortcuts/:id', (req, res) => {
+	app.delete(`${API_BASE}/account/shortcuts/:id`, (req, res) => {
 		const id = req.params.id;
 		const details = { '_id': new ObjectID(id) };
 		db.collection('shortcuts').remove(details, (err, item) => {

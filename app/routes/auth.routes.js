@@ -1,6 +1,6 @@
 var jwt = require('jwt-simple');
 var ObjectID = require('mongodb').ObjectID;
-const API_BASE = '/api/v1'
+const API_BASE = '/api/v1';
 module.exports = function(app,db) {
 
   app.post(`${API_BASE}/sign-up` ,(req,res) => {
